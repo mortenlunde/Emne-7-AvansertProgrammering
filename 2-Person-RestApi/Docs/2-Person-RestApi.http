@@ -1,0 +1,4 @@
+@Person_RestApi_HostAddress = https://localhost:7234
+
+GET {{Person_RestApi_HostAddress}}/persons
+Accept: application/json
