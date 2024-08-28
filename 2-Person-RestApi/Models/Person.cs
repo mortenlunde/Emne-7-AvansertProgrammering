@@ -2,8 +2,8 @@ namespace Person_RestApi.Models;
 
 public class Person
 {
-    public long Id { get; init; }
-    public string FirstName { get; init; } = string.Empty;
-    public string LastName { get; init; } = string.Empty;
-    public int Age { get; init; }
+    public long Id { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public int Age { get; set; }
 }

@@ -3,13 +3,26 @@
 GET {{Person_RestApi_HostAddress}}/persons
 Accept: application/json
 ###
-POST {{Person_RestApi_HostAddress}}
+POST {{Person_RestApi_HostAddress}}/persons
 accept: application/json
 Content-Type: application/json
+
 {
-"id": 5,
-"firstName": "Ann",
-"lastName": "Dough",
-"age": 51
+  "id": 1,
+  "firstName": "Ann",
+  "lastName": "Dough",
+  "age": 51
+}
+###
+DELETE {{Person_RestApi_HostAddress}}/persons/1
+###
+PATCH {{Person_RestApi_HostAddress}}/persons/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Dooooooh",
+  "age": 88
 }
 ###
