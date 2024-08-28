@@ -1,4 +1,4 @@
-using Person_RestApi.Models;
+using Person_RestApi.Endpoints;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +19,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Lager vårt første endepunkt. Metode: GET,  https://localhost:7234/persons/
-app.MapGet("/persons", () =>
-    {
-        Person person = new Person{age = 33, FirstName = "John", LastName = "Doe", Id = 1};
-        
-        return Results.Ok(person);
-    }).WithName("Persons")
-    .WithOpenApi();
+app.MapPersonEndpoints();
 
 app.Run();

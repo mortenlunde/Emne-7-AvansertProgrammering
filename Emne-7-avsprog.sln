@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-Hello", "1-Hello\1-Hello.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-Person-RestApi", "2-Person-RestApi\2-Person-RestApi.csproj", "{C548BAF0-7BF2-4D18-A8B2-21B2AAEA6A74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{373C19BA-F8A0-49FF-9F47-B4E93181C416}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +22,14 @@ Global
 		{C548BAF0-7BF2-4D18-A8B2-21B2AAEA6A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C548BAF0-7BF2-4D18-A8B2-21B2AAEA6A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C548BAF0-7BF2-4D18-A8B2-21B2AAEA6A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{373C19BA-F8A0-49FF-9F47-B4E93181C416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{373C19BA-F8A0-49FF-9F47-B4E93181C416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{373C19BA-F8A0-49FF-9F47-B4E93181C416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{373C19BA-F8A0-49FF-9F47-B4E93181C416}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E8C977B8-1DAE-462A-8A7C-229E681935C1} = {02C4A88E-7011-42B2-AD81-AE98DCA0F934}
 		{C548BAF0-7BF2-4D18-A8B2-21B2AAEA6A74} = {02C4A88E-7011-42B2-AD81-AE98DCA0F934}
+		{373C19BA-F8A0-49FF-9F47-B4E93181C416} = {02C4A88E-7011-42B2-AD81-AE98DCA0F934}
 	EndGlobalSection
 EndGlobal

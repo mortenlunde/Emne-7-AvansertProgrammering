@@ -1,4 +1,15 @@
 @Person_RestApi_HostAddress = https://localhost:7234
-
+###
 GET {{Person_RestApi_HostAddress}}/persons
 Accept: application/json
+###
+POST {{Person_RestApi_HostAddress}}
+accept: application/json
+Content-Type: application/json
+{
+"id": 5,
+"firstName": "Ann",
+"lastName": "Dough",
+"age": 51
+}
+###
