@@ -1,32 +1,50 @@
 using Person_RestApi.Endpoints;
-using Person_RestApi.Models;
+using Person_RestApi.Middleware;
 using Person_RestApi.Repositories;
 using Person_RestApi.Repositories.Interfaces;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-// Vi legger til vår service;
-builder.Services.AddSingleton<IPersonRepository, PersonInMemoryDataStorage>();
-builder.Services.AddSingleton<IRepository<Person>, PersonGenericInMemDb>();
-// builder.Services.AddScoped<>();
-// builder.Services.AddTransient<>();
-
-WebApplication app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Add services to the container.
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services
+        .AddEndpointsApiExplorer()
+        .AddSwaggerGen()
+        .AddExceptionHandler<GlobalExceptionHandling>()
+        // .AddSingleton<IRepository<Person>, PersonGenericInMemDb>()
+        // .AddSingleton<IPersonRepository, PersonInMemoryDataStorage>();
+        .AddSingleton<IPersonRepository, PersonMySql>();
+    // builder.Services.AddScoped<>();
+    // builder.Services.AddTransient<>();
+
+    Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .WriteTo.File("Logs/log-.txt", rollingInterval:RollingInterval.Day)
+        .CreateLogger();
+    
+    builder.Host.UseSerilog();
 }
 
-app.UseHttpsRedirection();
+WebApplication app = builder.Build();
+{
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-// Lager vårt første endepunkt. Metode: GET,  https://localhost:7234/persons/
-app.MapPersonEndpoints();
+    // Registrering av Middleware
+    app
+        .UseHttpsRedirection()
+        .UseExceptionHandler(_ => { });
+
+    // Lager vårt første endepunkt. Metode: GET,  https://localhost:7234/persons/
+    app.MapPersonEndpoints();
+    // app.MapGenericEndpoints();
+}
 
 app.Run();

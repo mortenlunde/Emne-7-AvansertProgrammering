@@ -1,0 +1,13 @@
+2024-10-02 09:45:07.874 +02:00 [INF] Now listening on: https://localhost:7234
+2024-10-02 09:45:07.901 +02:00 [INF] Now listening on: http://localhost:5046
+2024-10-02 09:45:07.902 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-10-02 09:45:07.902 +02:00 [INF] Hosting environment: Development
+2024-10-02 09:45:07.903 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-10-02 09:45:09.733 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger - null null
+2024-10-02 09:45:09.855 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger - 301 0 null 135.8006ms
+2024-10-02 09:45:09.872 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-10-02 09:45:09.914 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 41.5895ms
+2024-10-02 09:45:10.124 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-10-02 09:45:10.128 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-10-02 09:45:10.229 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 104.8277ms
+2024-10-02 09:45:21.833 +02:00 [INF] Application is shutting down...

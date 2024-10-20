@@ -23,13 +23,23 @@ public class PersonInMemoryDataStorage : IPersonRepository
         return DbInMemStorage;
     }
 
-    public async Task<Person?> DeleteByIdAsync(int id)
+    public async Task<Person?> DeleteByIdAsync(long id)
     {
         await Task.Delay(10);
         Person? person = DbInMemStorage.FirstOrDefault(p => p.Id == id);
         if (person != null)
             DbInMemStorage.Remove(person);
         return person;
+    }
+
+    public Task<Person?> UpdateByIdAsync(long id, Person person)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Person?> GetByIdAsync(long id)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Person?> UpdateByIdAsync(int id, Person updatedPerson)

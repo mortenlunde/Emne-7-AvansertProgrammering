@@ -1,0 +1,412 @@
+2024-09-11 10:16:19.573 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 10:16:19.595 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 10:16:19.596 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 10:16:19.596 +02:00 [INF] Hosting environment: Development
+2024-09-11 10:16:19.596 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 10:16:21.184 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 10:16:21.336 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 155.915ms
+2024-09-11 10:16:21.507 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 10:16:21.510 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 10:16:21.571 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 64.0963ms
+2024-09-11 10:16:24.788 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 10:16:24.797 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:16:24.975 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:16:24.975 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-09-11 10:16:24.985 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null text/plain; charset=utf-8 197.016ms
+2024-09-11 10:19:18.762 +02:00 [INF] Application is shutting down...
+2024-09-11 10:36:14.761 +02:00 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2024-09-11 10:36:14.826 +02:00 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2024-09-11 10:36:28.793 +02:00 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2024-09-11 10:36:28.857 +02:00 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2024-09-11 10:36:44.736 +02:00 [FTL] Application startup exception
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2024-09-11 10:36:44.798 +02:00 [ERR] Hosting failed to start
+System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'. Alternatively, set one of the aforementioned properties in 'Startup.ConfigureServices' as follows: 'services.AddExceptionHandler(options => { ... });' or configure to generate a 'ProblemDetails' response in 'service.AddProblemDetails()'.
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl..ctor(RequestDelegate next, ILoggerFactory loggerFactory, IOptions`1 options, DiagnosticListener diagnosticListener, IEnumerable`1 exceptionHandlers, IMeterFactory meterFactory, IProblemDetailsService problemDetailsService)
+   at Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.<>c__DisplayClass5_0.<SetExceptionHandlerMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2024-09-11 10:39:58.533 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 10:39:58.556 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 10:39:58.557 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 10:39:58.557 +02:00 [INF] Hosting environment: Development
+2024-09-11 10:39:58.557 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 10:40:00.374 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 10:40:00.543 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 171.9775ms
+2024-09-11 10:40:00.739 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 10:40:00.742 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 10:40:00.843 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 104.293ms
+2024-09-11 10:40:05.921 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 10:40:05.933 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:40:06.097 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:40:06.098 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:40:06.103 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6I7L8RO7U6:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:40:06.108 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 0 null 186.8367ms
+2024-09-11 10:42:49.386 +02:00 [INF] Application is shutting down...
+2024-09-11 10:48:19.511 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 10:48:19.534 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 10:48:19.535 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 10:48:19.536 +02:00 [INF] Hosting environment: Development
+2024-09-11 10:48:19.536 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 10:48:20.512 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 10:48:20.802 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 292.7631ms
+2024-09-11 10:48:21.065 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 10:48:21.070 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 10:48:21.159 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 93.999ms
+2024-09-11 10:48:25.025 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 10:48:25.035 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:48:25.215 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:48:25.216 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:48:25.221 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6I7PU8OAGG:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:48:25.227 +02:00 [INF] Setting HTTP status code 500.
+2024-09-11 10:48:25.235 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-11 10:48:25.245 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 220.2327ms
+2024-09-11 10:49:27.370 +02:00 [INF] Application is shutting down...
+2024-09-11 10:49:44.666 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 10:49:44.693 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 10:49:44.693 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 10:49:44.694 +02:00 [INF] Hosting environment: Development
+2024-09-11 10:49:44.694 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 10:49:45.000 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 10:49:45.246 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 246.0758ms
+2024-09-11 10:49:45.392 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 10:49:45.396 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 10:49:45.487 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 95.0486ms
+2024-09-11 10:49:48.916 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 10:49:48.929 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:49:49.110 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 10:49:49.110 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:49:49.115 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6I7QNH7EDI:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 10:49:49.119 +02:00 [INF] Setting HTTP status code 500.
+2024-09-11 10:49:49.126 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-11 10:49:49.136 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 220.8584ms
+2024-09-11 10:52:42.412 +02:00 [INF] Application is shutting down...
+2024-09-11 11:01:53.261 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 11:01:53.285 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 11:01:53.286 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 11:01:53.286 +02:00 [INF] Hosting environment: Development
+2024-09-11 11:01:53.286 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 11:01:55.014 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 11:01:55.171 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 159.5915ms
+2024-09-11 11:01:55.355 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 11:01:55.358 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 11:01:55.455 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 99.058ms
+2024-09-11 11:01:59.399 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 11:01:59.424 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 11:01:59.604 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 11:01:59.605 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 11:01:59.611 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6I81GP2FLG:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'caching_sha2_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 11:01:59.619 +02:00 [INF] Setting HTTP status code 500.
+2024-09-11 11:01:59.627 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-11 11:01:59.637 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 237.4471ms
+2024-09-11 11:04:07.080 +02:00 [INF] Application is shutting down...
+2024-09-11 11:04:10.492 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-11 11:04:10.514 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-11 11:04:10.516 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-11 11:04:10.516 +02:00 [INF] Hosting environment: Development
+2024-09-11 11:04:10.516 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-11 11:04:12.103 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-11 11:04:12.288 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 187.3243ms
+2024-09-11 11:04:12.491 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-11 11:04:12.494 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-11 11:04:12.596 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 104.8217ms
+2024-09-11 11:04:17.576 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-11 11:04:17.593 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 11:04:17.600 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-11 11:04:17.601 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ArgumentNullException: Value cannot be null.
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 11:04:17.620 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6I82PK6O6Q:00000005
+System.ArgumentNullException: Value cannot be null.
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-11 11:04:17.624 +02:00 [INF] Setting HTTP status code 400.
+2024-09-11 11:04:17.634 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-11 11:04:17.647 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 400 null application/problem+json 71.2188ms
+2024-09-11 11:04:27.661 +02:00 [INF] Application is shutting down...

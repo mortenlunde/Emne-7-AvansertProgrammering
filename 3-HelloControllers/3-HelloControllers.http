@@ -1,0 +1,6 @@
+@_3_HelloControllers_HostAddress = http://localhost:5040
+
+GET {{_3_HelloControllers_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,523 @@
+2024-09-26 12:17:01.594 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-26 12:17:01.618 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-26 12:17:01.619 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-26 12:17:01.619 +02:00 [INF] Hosting environment: Development
+2024-09-26 12:17:01.619 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-26 12:17:03.247 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger - null null
+2024-09-26 12:17:03.473 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger - 301 0 null 226.6851ms
+2024-09-26 12:17:03.494 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-26 12:17:03.635 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 141.239ms
+2024-09-26 12:17:03.871 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-26 12:17:03.884 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-26 12:17:03.899 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/favicon-32x32.png - null null
+2024-09-26 12:17:03.911 +02:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-09-26 12:17:03.912 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/favicon-32x32.png - 200 628 image/png 12.594ms
+2024-09-26 12:17:03.939 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/favicon-16x16.png - null null
+2024-09-26 12:17:03.941 +02:00 [INF] Sending file. Request path: '/favicon-16x16.png'. Physical path: 'N/A'
+2024-09-26 12:17:03.941 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/favicon-16x16.png - 200 665 image/png 2.9462ms
+2024-09-26 12:17:04.006 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 135.2322ms
+2024-09-26 12:17:07.742 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:17:07.760 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:17:07.885 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:17:07.886 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts.
+ ---> System.Net.Sockets.SocketException (61): Connection refused
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Net.Sockets.TcpClient.CompleteConnectAsync(Task task)
+   at MySql.Data.MySqlClient.NativeDriver.<>c.<OpenAsync>b__38_0(Exception ex)
+   at System.AggregateException.Handle(Func`2 predicate)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:17:07.891 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2HEDRSTQ:0000000B
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts.
+ ---> System.Net.Sockets.SocketException (61): Connection refused
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Net.Sockets.TcpClient.CompleteConnectAsync(Task task)
+   at MySql.Data.MySqlClient.NativeDriver.<>c.<OpenAsync>b__38_0(Exception ex)
+   at System.AggregateException.Handle(Func`2 predicate)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:17:07.895 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:17:07.899 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:17:07.904 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 162.959ms
+2024-09-26 12:17:20.211 +02:00 [INF] Application is shutting down...
+2024-09-26 12:19:49.624 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-26 12:19:49.648 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-26 12:19:49.649 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-26 12:19:49.649 +02:00 [INF] Hosting environment: Development
+2024-09-26 12:19:49.649 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-26 12:19:50.901 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-26 12:19:51.086 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 186.0266ms
+2024-09-26 12:19:51.304 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-26 12:19:51.316 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-26 12:19:51.485 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 180.4629ms
+2024-09-26 12:19:54.382 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:19:54.391 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:19:54.561 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:19:54.561 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'mysql_native_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.HandleAuthChangeAsync(MySqlPacket packet, Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:19:54.569 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2J0EJM80:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app-1' using method 'mysql_native_password' failed with message: Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app-1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.HandleAuthChangeAsync(MySqlPacket packet, Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:19:54.575 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:19:54.586 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:19:54.592 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 211.3603ms
+2024-09-26 12:20:14.906 +02:00 [INF] Application is shutting down...
+2024-09-26 12:20:17.230 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-26 12:20:17.252 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-26 12:20:17.253 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-26 12:20:17.253 +02:00 [INF] Hosting environment: Development
+2024-09-26 12:20:17.253 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-26 12:20:17.753 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-26 12:20:18.004 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 257.684ms
+2024-09-26 12:20:18.208 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-26 12:20:18.213 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-26 12:20:18.381 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 173.5473ms
+2024-09-26 12:20:21.579 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:20:21.601 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:20:21.844 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:20:21.844 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'ga_emne7_avansert.Person' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 37
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:20:21.850 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2J8M49FE:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'ga_emne7_avansert.Person' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 37
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:20:21.855 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:20:21.862 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:20:21.869 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 290.2935ms
+2024-09-26 12:21:07.310 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:21:07.314 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:07.351 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:21:07.354 +02:00 [INF] Writing value of type 'List`1' as Json.
+2024-09-26 12:21:07.358 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:07.358 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 200 null application/json; charset=utf-8 49.4672ms
+2024-09-26 12:21:16.285 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:21:16.292 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:16.306 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:21:16.306 +02:00 [INF] Writing value of type 'List`1' as Json.
+2024-09-26 12:21:16.307 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:16.307 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 200 null application/json; charset=utf-8 27.1736ms
+2024-09-26 12:21:19.329 +02:00 [INF] Application is shutting down...
+2024-09-26 12:21:21.736 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-26 12:21:21.760 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-26 12:21:21.760 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-26 12:21:21.761 +02:00 [INF] Hosting environment: Development
+2024-09-26 12:21:21.761 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-26 12:21:23.377 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-26 12:21:23.490 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 114.985ms
+2024-09-26 12:21:23.678 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-26 12:21:23.681 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-26 12:21:23.778 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 100.3271ms
+2024-09-26 12:21:26.915 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:21:26.923 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:27.089 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:21:27.090 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app1' using method 'mysql_native_password' failed with message: Access denied for user 'ga-app1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.HandleAuthChangeAsync(MySqlPacket packet, Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:21:27.096 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2JS1OIC0:00000005
+MySql.Data.MySqlClient.MySqlException (0x80004005): Authentication to host 'localhost' for user 'ga-app1' using method 'mysql_native_password' failed with message: Access denied for user 'ga-app1'@'192.168.65.1' (using password: YES)
+ ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Access denied for user 'ga-app1'@'192.168.65.1' (using password: YES)
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticationFailed(MySqlException ex)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ContinueAuthenticationAsync(Boolean execAsync, Byte[] data)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.HandleAuthChangeAsync(MySqlPacket packet, Boolean execAsync)
+   at MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.AuthenticateAsync(Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.AuthenticateAsync(String authMethod, Boolean reset, Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.NativeDriver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.Driver.CreateAsync(MySqlConnectionStringBuilder settings, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriverAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlPool.GetConnectionAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 34
+   at Person_RestApi.Repositories.PersonMySql.GetAllAsync() in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Repositories/PersonMySql.cs:line 50
+   at Person_RestApi.Endpoints.PersonEndpoints.GetPersonsAsync(IPersonRepository repo, Nullable`1 id) in /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi/Endpoints/PersonEndpoints.cs:line 20
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:21:27.101 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:21:27.106 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:21:27.110 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 500 null application/problem+json 195.1674ms
+2024-09-26 12:21:59.504 +02:00 [INF] Application is shutting down...
+2024-09-26 12:22:02.045 +02:00 [INF] Now listening on: https://localhost:7234
+2024-09-26 12:22:02.068 +02:00 [INF] Now listening on: http://localhost:5046
+2024-09-26 12:22:02.069 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-26 12:22:02.069 +02:00 [INF] Hosting environment: Development
+2024-09-26 12:22:02.069 +02:00 [INF] Content root path: /Users/mortenlunde/RiderProjects/Emne-7-avsprog/2-Person-RestApi
+2024-09-26 12:22:02.630 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/index.html - null null
+2024-09-26 12:22:02.798 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/index.html - 200 null text/html;charset=utf-8 170.7306ms
+2024-09-26 12:22:02.956 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - null null
+2024-09-26 12:22:02.961 +02:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-26 12:22:03.044 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 87.3822ms
+2024-09-26 12:22:06.123 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:22:06.127 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:22:06.348 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:06.350 +02:00 [INF] Writing value of type 'List`1' as Json.
+2024-09-26 12:22:06.352 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:22:06.352 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 200 null application/json; charset=utf-8 229.0835ms
+2024-09-26 12:22:16.340 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 63
+2024-09-26 12:22:16.341 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:16.349 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:16.350 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. Path: $ | LineNumber: 4 | BytePositionInLine: 0.
+ ---> System.Text.Json.JsonReaderException: The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. LineNumber: 4 | BytePositionInLine: 0.
+   at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.ConsumeNextToken(Byte marker)
+   at System.Text.Json.Utf8JsonReader.ConsumeNextTokenOrRollback(Byte marker)
+   at System.Text.Json.Utf8JsonReader.ReadSingleSegment()
+   at System.Text.Json.Utf8JsonReader.Read()
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, JsonReaderException ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:22:16.388 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2K7U5NIE:00000007
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. Path: $ | LineNumber: 4 | BytePositionInLine: 0.
+ ---> System.Text.Json.JsonReaderException: The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. LineNumber: 4 | BytePositionInLine: 0.
+   at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.ConsumeNextToken(Byte marker)
+   at System.Text.Json.Utf8JsonReader.ConsumeNextTokenOrRollback(Byte marker)
+   at System.Text.Json.Utf8JsonReader.ReadSingleSegment()
+   at System.Text.Json.Utf8JsonReader.Read()
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, JsonReaderException ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:22:16.390 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:22:16.395 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:22:16.403 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 500 null application/problem+json 62.6291ms
+2024-09-26 12:22:22.994 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 74
+2024-09-26 12:22:22.995 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:23.025 +02:00 [INF] Person added: {"Id":0,"FirstName":"string","LastName":"string","Age":0,"$type":"Person"}
+2024-09-26 12:22:23.064 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:23.064 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:22:23.067 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:23.067 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 73.1562ms
+2024-09-26 12:22:31.062 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 62
+2024-09-26 12:22:31.066 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:31.071 +02:00 [INF] Person added: {"Id":0,"FirstName":"string","LastName":"string","Age":0,"$type":"Person"}
+2024-09-26 12:22:31.080 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:31.080 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:22:31.080 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:31.080 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 18.2172ms
+2024-09-26 12:22:43.385 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 38
+2024-09-26 12:22:43.392 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:43.395 +02:00 [INF] Person added: {"Id":0,"FirstName":"string","LastName":"","Age":0,"$type":"Person"}
+2024-09-26 12:22:43.410 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:43.410 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:22:43.411 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:43.411 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 27.2554ms
+2024-09-26 12:22:52.056 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 38
+2024-09-26 12:22:52.057 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:52.057 +02:00 [INF] Person added: {"Id":4,"FirstName":"string","LastName":"","Age":0,"$type":"Person"}
+2024-09-26 12:22:52.069 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:52.069 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:22:52.069 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:52.070 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 13.511ms
+2024-09-26 12:22:54.907 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 38
+2024-09-26 12:22:54.908 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:54.908 +02:00 [INF] Person added: {"Id":4,"FirstName":"string","LastName":"","Age":0,"$type":"Person"}
+2024-09-26 12:22:54.914 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:22:54.915 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:22:54.915 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:22:54.915 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 8.024ms
+2024-09-26 12:23:00.355 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7234/persons - null null
+2024-09-26 12:23:00.356 +02:00 [INF] Executing endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:23:00.370 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:23:00.371 +02:00 [INF] Writing value of type 'List`1' as Json.
+2024-09-26 12:23:00.371 +02:00 [INF] Executed endpoint 'HTTP: GET /persons/ => GetPersonsAsync'
+2024-09-26 12:23:00.372 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7234/persons - 200 null application/json; charset=utf-8 16.3237ms
+2024-09-26 12:23:28.959 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 31
+2024-09-26 12:23:28.962 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:23:28.972 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:23:28.972 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON value could not be converted to System.String. Path: $.firstName | LineNumber: 2 | BytePositionInLine: 16.
+ ---> System.InvalidOperationException: Cannot get the value of a token type 'Number' as a string.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_ExpectedString(JsonTokenType tokenType)
+   at System.Text.Json.Utf8JsonReader.GetString()
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, Utf8JsonReader& reader, Exception ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:23:28.981 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2K7U5NIE:00000015
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON value could not be converted to System.String. Path: $.firstName | LineNumber: 2 | BytePositionInLine: 16.
+ ---> System.InvalidOperationException: Cannot get the value of a token type 'Number' as a string.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_ExpectedString(JsonTokenType tokenType)
+   at System.Text.Json.Utf8JsonReader.GetString()
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, Utf8JsonReader& reader, Exception ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:23:28.984 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:23:28.984 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:23:28.985 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 500 null application/problem+json 26.066ms
+2024-09-26 12:24:05.374 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 2
+2024-09-26 12:24:05.377 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:24:05.379 +02:00 [INF] Person added: {"Id":0,"FirstName":"","LastName":"","Age":0,"$type":"Person"}
+2024-09-26 12:24:05.410 +02:00 [INF] Setting HTTP status code 200.
+2024-09-26 12:24:05.410 +02:00 [INF] Writing value of type 'Person' as Json.
+2024-09-26 12:24:05.412 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:24:05.413 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 200 null application/json; charset=utf-8 39.3143ms
+2024-09-26 12:24:18.071 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7234/persons - application/json 2
+2024-09-26 12:24:18.072 +02:00 [INF] Executing endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:24:18.076 +02:00 [INF] Executed endpoint 'HTTP: POST /persons/ => PostPersonsAsync'
+2024-09-26 12:24:18.079 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON value could not be converted to Person_RestApi.Models.Person. Path: $ | LineNumber: 0 | BytePositionInLine: 1.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_DeserializeUnableToConvertValue(Type propertyType)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:24:18.085 +02:00 [ERR] Could not process a request on the Machine Mortens-MacBook-Pro. TraceID: 0HN6U2K7U5NIE:00000019
+Microsoft.AspNetCore.Http.BadHttpRequestException: Failed to read parameter "Person person" from the request body as JSON.
+ ---> System.Text.Json.JsonException: The JSON value could not be converted to Person_RestApi.Models.Person. Path: $ | LineNumber: 0 | BytePositionInLine: 1.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_DeserializeUnableToConvertValue(Type propertyType)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize(ReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.HttpRequestJsonExtensions.ReadFromJsonAsync(HttpRequest request, JsonTypeInfo jsonTypeInfo, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.Log.InvalidJsonRequestBody(HttpContext httpContext, String parameterTypeName, String parameterName, Exception exception, Boolean shouldThrow)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<HandleRequestBodyAndCompileRequestDelegateForJson>g__TryReadBodyAsync|102_0(HttpContext httpContext, Type bodyType, String parameterTypeName, String parameterName, Boolean allowEmptyRequestBody, Boolean throwOnBadRequest, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.<>c__DisplayClass102_2.<<HandleRequestBodyAndCompileRequestDelegateForJson>b__2>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-09-26 12:24:18.087 +02:00 [INF] Setting HTTP status code 500.
+2024-09-26 12:24:18.088 +02:00 [INF] Writing value of type 'ProblemDetails' as Json.
+2024-09-26 12:24:18.088 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7234/persons - 500 null application/problem+json 16.8112ms
+2024-09-26 12:24:52.182 +02:00 [INF] Application is shutting down...

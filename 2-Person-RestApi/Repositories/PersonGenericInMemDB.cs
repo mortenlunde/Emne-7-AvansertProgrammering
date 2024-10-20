@@ -5,33 +5,51 @@ namespace Person_RestApi.Repositories;
 
 public class PersonGenericInMemDb : IRepository<Person>
 {
-    public Task<ICollection<Person>> GetAllAsync()
+    private static readonly List<Person> PersonsList = [];
+    public async Task<ICollection<Person>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        await Task.Delay(10);
+        return PersonsList;
     }
 
-    public Task<Person?> AddAsync(Person item)
+    public async Task<Person?> AddAsync(Person item)
     {
-        throw new NotImplementedException();
+        await Task.Delay(10);
+        item.Id = PersonsList.Count + 1;
+        PersonsList.Add(item);
+        return item;
+    }
+    
+    public Task<Person?> GetByIdAsync(long id)
+    {
+        Person? existingPerson = PersonsList.FirstOrDefault(p => p.Id == id);
+        return Task.FromResult(existingPerson);
     }
 
-    public Task<Person?> GetByIdAsync(int id)
+    public async Task<Person?> UpdateAsync(Person item)
     {
-        throw new NotImplementedException();
+        await Task.Delay(10);
+        Person? existingPerson = await GetByIdAsync(item.Id);
+        if (existingPerson == null) return null;
+        existingPerson.FirstName = item.FirstName;
+        existingPerson.LastName = item.LastName;
+        existingPerson.Age = item.Age;
+
+        return existingPerson;
     }
 
-    public Task<Person?> UpdateAsync(Person item)
+    public async Task<Person?> DeleteAsync(Person item)
     {
-        throw new NotImplementedException();
+        await Task.Delay(10);
+        Person? existingPerson = await DeleteByIdAsync(item.Id);
+        if (existingPerson != null)
+            PersonsList.Remove(existingPerson);
+        return existingPerson;
     }
 
-    public Task<Person?> DeleteAsync(Person item)
+    public Task<Person?> DeleteByIdAsync(long id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Person?> DeleteByIdAsync(int id)
-    {
-        throw new NotImplementedException();
+        Person? existingPerson = PersonsList.FirstOrDefault(p => p.Id == id);
+        return Task.FromResult(existingPerson);
     }
 }
