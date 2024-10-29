@@ -25,9 +25,11 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersAsync(
         [FromQuery] UserSearchParams? searchParams, [FromQuery] int pageNr = 1, [FromQuery] int pageSize = 10)
     {
-        if (searchParams.Firstname is null && searchParams.Lastname is null && searchParams.Email is null && searchParams.Username is null)
+        if (searchParams!.Firstname is null && searchParams.Lastname is null 
+                                            && searchParams.Email is null 
+                                            && searchParams.Username is null)
         {
-            var userDtos = await _userService.GetPagedAsync(pageNr, pageSize);
+            IEnumerable<UserDto> userDtos = await _userService.GetPagedAsync(pageNr, pageSize);
             return Ok(userDtos);
         }
 
