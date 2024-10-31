@@ -11,7 +11,7 @@ public class CommentService : ICommentService
     private readonly IMapper<Comment, CommentDto> _mapper;
     private readonly ICommentRepository _commentRepository;
     private readonly IUserRepository _userRepository;
-    private readonly IMapper<Comment, CommentRegDto> _commentMapper;
+    private readonly IMapper<Comment, CommentRegDto> _regMapper;
     private readonly IPostRepository _postRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -23,7 +23,7 @@ public class CommentService : ICommentService
         _mapper = mapper;
         _commentRepository = commentRepository;
         _userRepository = userRepository;
-        _commentMapper = commentMapper;
+        _regMapper = commentMapper;
         _postRepository = postRepository;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -60,5 +60,38 @@ public class CommentService : ICommentService
     public async Task<CommentDto?> DeleteByIdAsync(Guid id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<CommentDto?> AddComment(CommentRegDto regDto)
+    {
+        Comment comment = _regMapper.MapToModel(regDto);
+        comment.Id = Guid.NewGuid();
+        if (_httpContextAccessor.HttpContext.Items["UserId"] is string userIdStr 
+            && Guid.TryParse(userIdStr, out Guid userId))
+        {
+            comment.UserId = userId;
+        }
+        else
+        {
+            _logger.LogWarning("Invalid or missing UserId in HttpContext.");
+            return null;  // or handle the error as appropriate
+        }
+
+        if (_httpContextAccessor.HttpContext.Items["PostId"] is string postIdStr 
+            && Guid.TryParse(postIdStr, out Guid postId))
+        {
+            comment.PostId = postId;
+        }
+        else
+        {
+            _logger.LogWarning("Invalid or missing PostId in HttpContext.");
+            return null;  // or handle the error as appropriate
+        }
+        comment.DateCommented = DateTime.UtcNow;
+        
+        Comment commentResponse = await _commentRepository.AddAsync(comment);
+        return commentResponse is null
+            ? null
+            : _mapper.MapToDto(commentResponse);
     }
 }

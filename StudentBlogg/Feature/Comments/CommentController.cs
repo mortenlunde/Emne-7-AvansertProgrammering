@@ -30,9 +30,9 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     }
 
     [HttpPost("Post", Name = "PostComment")]
-    public async Task<ActionResult<CommentDto>> PostComment(CommentDto dto)
+    public async Task<ActionResult<CommentDto>> PostComment(CommentRegDto dto)
     {
-        var comment = await _commentService.AddAsync(dto);
+        var comment = await _commentService.AddComment(dto);
 
         return comment is null
             ? BadRequest("Comment not created")
