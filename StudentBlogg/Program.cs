@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StudentBlogg.Common.Interfaces;
@@ -8,6 +10,7 @@ using StudentBlogg.Feature.Posts;
 using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users;
 using StudentBlogg.Feature.Users.Interfaces;
+using StudentBlogg.Health;
 using StudentBlogg.Middleware;
 
 namespace StudentBlogg;
@@ -35,6 +38,13 @@ public class Program
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddExceptionHandler<GlobalExceptionHandling>();
         builder.Services.AddScoped<DatabaseConnectionMiddleware>();
+        
+        builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+        builder.Services.AddFluentValidationAutoValidation(options =>
+            options.DisableDataAnnotationsValidation = true);
+
+        builder.Services.AddHealthChecks()
+            .AddCheck<DataBaseHealthCheck>("DataBase");
 
         builder.Services.AddScoped<IPostService, PostService>();
         builder.Services.AddScoped<IMapper<Post, PostDto>, PostMapper>();
@@ -55,6 +65,7 @@ public class Program
         }
 
         app
+            .UseHealthChecks("/_health")
             .UseMiddleware<DatabaseConnectionMiddleware>()
             .UseExceptionHandler(_ => { }) 
             .UseMiddleware<BasicAuthentication>()

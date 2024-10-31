@@ -20,7 +20,6 @@ public class PostMapper : IMapper<Post, PostDto>
     {
         return new Post
         {
-            Id = dto.Id,
             UserId = dto.UserId,
             Title = dto.Title,
             Content = dto.Content,

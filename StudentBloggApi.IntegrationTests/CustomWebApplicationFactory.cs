@@ -21,7 +21,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         base.ConfigureWebHost(builder);
         builder.ConfigureTestServices(services =>
         {
-            // services.AddSingleton(UserRepositoryMock.Object);
+            services.AddSingleton(UserRepositoryMock.Object);
         });
     }
 }

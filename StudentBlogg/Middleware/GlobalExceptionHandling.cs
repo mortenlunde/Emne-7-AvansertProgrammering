@@ -28,6 +28,7 @@ public class GlobalExceptionHandling(ILogger<GlobalExceptionHandling> logger) : 
             MySqlException => StatusCodes.Status503ServiceUnavailable,
             RetryLimitExceededException => StatusCodes.Status503ServiceUnavailable,
             DbUpdateException => StatusCodes.Status503ServiceUnavailable,
+            WrongUserLoggedInException => StatusCodes.Status401Unauthorized,
             _ => StatusCodes.Status500InternalServerError
         };
         
@@ -75,3 +76,6 @@ public class NoUserFoundException(string id)
 // Database Connection Exceptions
 public class DbConnectionException() 
     : Exception("Connection error.") { }
+    
+public class WrongUserLoggedInException() 
+    : Exception("You can not delete post for another user.") { }

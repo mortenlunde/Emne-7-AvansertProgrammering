@@ -2,6 +2,7 @@ using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users;
 using StudentBlogg.Feature.Users.Interfaces;
+using StudentBlogg.Middleware;
 
 namespace StudentBlogg.Feature.Posts;
 
@@ -74,6 +75,10 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
                 ? null 
                 : mapper.MapToDto(updatedPost);
         }
+        else
+        {
+            throw new WrongUserLoggedInException();
+        }
 
         logger.LogWarning("User {UserId} is not authorized to update post with Id {PostId}", loggedInUserId, id);
         return null;
@@ -128,6 +133,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
     public async Task<PostDto> CreatePostAsync(PostRegDto postDto)
     {
         Post post = mapperReg.MapToModel(postDto);
+        post.Id = Guid.NewGuid();
     
         // Ensure UserId is of type Guid, converting if necessary
         if (httpContextAccessor.HttpContext.Items["UserId"] is string userIdString && Guid.TryParse(userIdString, out Guid userIdGuid))
@@ -143,7 +149,6 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
             throw new InvalidOperationException("UserId is not set or is not in a valid format.");
         }
 
-        post.Id = Guid.NewGuid();
         post.DatePosted = DateTime.UtcNow;
     
         Post postResponse = await postRepository.AddAsync(post);
