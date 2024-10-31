@@ -6,6 +6,8 @@ using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Configurations;
 using StudentBlogg.Data;
 using StudentBlogg.Extensions;
+using StudentBlogg.Feature.Comments;
+using StudentBlogg.Feature.Comments.Interfaces;
 using StudentBlogg.Feature.Posts;
 using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users;
@@ -50,6 +52,11 @@ public class Program
         builder.Services.AddScoped<IMapper<Post, PostDto>, PostMapper>();
         builder.Services.AddScoped<IMapper<Post, PostRegDto>, PostRegMapper>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
+        
+        builder.Services.AddScoped<ICommentService, CommentService>();
+        builder.Services.AddScoped<IMapper<Comment, CommentDto>, CommentMapper>();
+        builder.Services.AddScoped<IMapper<Comment, CommentRegDto>, CommentRegMapper>();
+        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
         builder.Host.UseSerilog((context, configuration) =>
         {
