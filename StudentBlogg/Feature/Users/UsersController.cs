@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
+using StudentBlogg.Feature.Posts;
+using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users.Interfaces;
 
 namespace StudentBlogg.Feature.Users;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class UsersController(ILogger<UsersController> logger, IUserService userService) : ControllerBase
+public class UsersController(ILogger<UsersController> logger, IUserService userService, IPostService postService) : ControllerBase
 {
     private readonly ILogger<UsersController> _logger = logger;
     private readonly IUserService _userService = userService;
+    private readonly IPostService _postService = postService;
     
     [HttpGet("{id:guid}", Name = "GetUserByIDAsync")]
     public async Task<ActionResult<UserDto>> GetUserByIdAsync(Guid id)
@@ -54,5 +57,29 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
         return result is null
             ? BadRequest("Failed to delete user")
             :Ok(result);
+    }
+
+    [HttpPut("{id:guid}", Name = "UpdateUserAsync")]
+    public async Task<ActionResult<UserDto>> UpdateUserAsync(Guid id, UserDto dto)
+    {
+        _logger.LogInformation($"Updating user with ID {id} updated");
+        var result = await _userService.UpdateAsync(id, dto);
+        
+        return result is null
+            ? BadRequest("Failed to update user")
+            :Ok(result);
+    }
+
+    [HttpGet("{id:guid}/posts", Name = "GetUserPostsAsync")]
+    public async Task<ActionResult<IEnumerable<PostDto>>> GetUserPostsAsync(Guid id)
+    {
+        _logger.LogInformation($"User with ID {id} found");
+        var user  = await _userService.GetByIdAsync(id);
+        var posts = await _postService.GetPagedAsync(1, 10);
+        var result = posts.Where(u => u.UserId == user.Id);
+        
+        return result is null
+            ? BadRequest("Failed to get posts")
+            : Ok(result);
     }
 }

@@ -50,11 +50,20 @@ public class CommentRepository : ICommentRepository
 
     public async Task<Comment?> UpdateByIdAsync(Guid id, Comment entity)
     {
-        throw new NotImplementedException();
+        Comment? existingComment = await _dbContext.Comments.FindAsync(id);
+        if (existingComment == null) return null;
+        
+        existingComment.Content = entity.Content;
+        
+        await _dbContext.SaveChangesAsync();
+        return existingComment;
     }
 
     public async Task<Comment?> DeleteByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        Comment? comment = await _dbContext.Comments.FindAsync(id);
+        await _dbContext.Comments.Where(c => c.Id == id).ExecuteDeleteAsync();
+        await _dbContext.SaveChangesAsync();
+        return comment;
     }
 }

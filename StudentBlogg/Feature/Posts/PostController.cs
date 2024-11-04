@@ -55,7 +55,7 @@ public class PostController(ILogger<PostController> logger, IPostService postSer
     public async Task<ActionResult<PostDto>> UpdatePost(Guid id, PostDto dto)
     {
         _logger.LogInformation($"Attempting to update post with id {id}.");
-        var result = await postService.UpdateAsync(id, dto);
+        var result = await _postService.UpdateAsync(id, dto);
 
         return result is null
             ? BadRequest("Failed to update post.")

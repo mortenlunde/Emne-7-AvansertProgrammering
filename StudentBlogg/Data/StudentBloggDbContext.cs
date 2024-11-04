@@ -4,13 +4,8 @@ using StudentBlogg.Feature.Posts;
 using StudentBlogg.Feature.Users;
 namespace StudentBlogg.Data;
 
-public class StudentBloggDbContext : DbContext
+public class StudentBloggDbContext(DbContextOptions<StudentBloggDbContext> options) : DbContext(options)
 {
-    public StudentBloggDbContext(DbContextOptions<StudentBloggDbContext> options) : base(options)
-    {
-        
-    }
-    
     public DbSet<User> Users { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }

@@ -6,7 +6,8 @@ using StudentBlogg.Middleware;
 
 namespace StudentBlogg.Feature.Posts;
 
-public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> mapper, IPostRepository postRepository, IUserRepository userRepository, IMapper<Post, PostRegDto> mapperReg, IHttpContextAccessor httpContextAccessor) : IPostService
+public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> mapper, IPostRepository postRepository, 
+    IUserRepository userRepository, IMapper<Post, PostRegDto> mapperReg, IHttpContextAccessor httpContextAccessor) : IPostService
 {
     public async Task<PostDto?> GetByIdAsync(Guid id)
     {
@@ -69,7 +70,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
             postToUpdate.Content = entity.Content;
 
             // Save changes through the repository
-            var updatedPost = await postRepository.UpdateByIdAsync(id, postToUpdate);
+            Post? updatedPost = await postRepository.UpdateByIdAsync(id, postToUpdate);
 
             return updatedPost is null 
                 ? null 
@@ -79,9 +80,6 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
         {
             throw new WrongUserLoggedInException();
         }
-
-        logger.LogWarning("User {UserId} is not authorized to update post with Id {PostId}", loggedInUserId, id);
-        return null;
     }
 
 
@@ -153,6 +151,8 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
     
         Post postResponse = await postRepository.AddAsync(post);
     
-        return postResponse is null ? null : mapper.MapToDto(postResponse);
+        return postResponse is null 
+            ? null 
+            : mapper.MapToDto(postResponse);
     }
 }

@@ -10,5 +10,6 @@
     &lt;TestId&gt;xUnit::13CB6E9C-FE7F-4E5D-9074-061C910A643E::net8.0::StudentblogApi.UnitTests.Features.Users.UsersControllerTests.GetUsersAsync_WhenDefaultPagesSizeAndOneUserExists_ShouldReturOneUser&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::A6526BBE-505E-45E0-9791-7AEF6DF8C893::net8.0::StudentBloggApi.IntegrationTests.Features.Users.UsersIntegrationTests.GetUsers_WhenNoSearchParams_ThenReturnPagedUsers&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::A6526BBE-505E-45E0-9791-7AEF6DF8C893::net8.0::StudentBloggApi.IntegrationTests.Features.Users.UsersIntegrationTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::13CB6E9C-FE7F-4E5D-9074-061C910A643E::net8.0::StudentblogApi.UnitTests.Features.Users.UsersControllerTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

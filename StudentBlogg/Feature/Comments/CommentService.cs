@@ -1,7 +1,10 @@
 using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Feature.Comments.Interfaces;
+using StudentBlogg.Feature.Posts;
 using StudentBlogg.Feature.Posts.Interfaces;
+using StudentBlogg.Feature.Users;
 using StudentBlogg.Feature.Users.Interfaces;
+using StudentBlogg.Middleware;
 
 namespace StudentBlogg.Feature.Comments;
 
@@ -54,12 +57,82 @@ public class CommentService : ICommentService
 
     public async Task<CommentDto?> UpdateAsync(Guid id, CommentDto entity)
     {
-        throw new NotImplementedException();
+        string loggedInUserId = _httpContextAccessor.HttpContext.Items["UserId"] as string;
+        
+        if (!Guid.TryParse(loggedInUserId, out Guid userId))
+        {
+            _logger.LogWarning("Invalid user id format: {UserId}", userId);
+            return null;
+        }
+        
+        User loggedInUser = (await _userRepository.FindAsync(user => user.Id == userId)).FirstOrDefault();
+        if (loggedInUser is null)
+        {
+            _logger.LogWarning("User id not found: {UserId}", userId);
+        }
+        
+        Comment commentToUpdate = (await _commentRepository.FindAsync(c => c.Id == id)).FirstOrDefault();
+        if (commentToUpdate is null)
+        {
+            _logger.LogWarning("Comment not found: {Id}", id);
+            return null;
+        }
+
+        if (commentToUpdate.UserId == loggedInUser.Id || loggedInUser.IsAdminUser)
+        {
+            commentToUpdate.Content = entity.Content;
+            Comment? updatedComment = await _commentRepository.UpdateByIdAsync(id, commentToUpdate);
+            
+            return updatedComment is null
+                ? null
+                : _mapper.MapToDto(updatedComment);
+        }
+        else
+        {
+            throw new WrongUserLoggedInException();
+        }
     }
 
     public async Task<CommentDto?> DeleteByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        string loggedInUserId = _httpContextAccessor.HttpContext.Items["UserId"] as string;
+        if (!Guid.TryParse(loggedInUserId, out Guid loggedInUserGuid))
+        {
+            _logger.LogWarning("Invalid UserId format: {UserId}", loggedInUserId);
+            return null;
+        }
+        
+        User? loggedInUser = (await _userRepository.FindAsync(user => user.Id == loggedInUserGuid)).FirstOrDefault();
+        if (loggedInUser == null)
+        {
+            _logger.LogWarning("User {UserId} not found", loggedInUserId);
+            return null;
+        }
+        
+        IEnumerable<Comment> comments = await _commentRepository.FindAsync(c => c.Id == id);
+        Comment? commentToDelete = comments.FirstOrDefault();
+
+        if (commentToDelete is null)
+        {
+            _logger.LogWarning("Comment not found: {Id}", id);
+            return null;
+        }
+
+        if (commentToDelete.UserId == loggedInUser.Id || loggedInUser.IsAdminUser)
+        {
+            _logger.LogInformation("Deleting comment with id {commentID} for user {userID}", id, loggedInUserId);
+            Comment? deletedComment = await _commentRepository.DeleteByIdAsync(id);
+
+            if (deletedComment is null)
+            {
+                _logger.LogWarning("Comment with id {commentID} not found", id);
+                return null;
+            }
+            
+            return _mapper.MapToDto(deletedComment);
+        }
+        _logger.LogWarning("User {UserId} not autorized to delete comment with id {commentId}", loggedInUserId, id);
+        return null;
     }
 
     public async Task<CommentDto?> AddComment(CommentRegDto regDto)
