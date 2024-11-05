@@ -28,10 +28,16 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     }
 
     [HttpGet(Name = "GetComments")]
-    public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments(int page = 1, int pageSize = 10)
+    public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments(
+        [FromQuery] CommentSearchParams? searchParams, [FromQuery] int pageNr = 1, [FromQuery] int pageSize = 10)
     {
-        var commentDtos = await _commentService.GetPagedAsync(page, pageSize);
-        return Ok(commentDtos);
+        if (searchParams!.Title is null && searchParams!.Content is null && searchParams!.DateCommented is null)
+        {
+            IEnumerable<CommentDto> commentDtos = await _commentService.GetPagedAsync(pageNr, pageSize);
+            return Ok(commentDtos);
+        }
+
+        return Ok(await _commentService.FindAsync(searchParams));
     }
 
     [HttpPost("Post", Name = "PostComment")]

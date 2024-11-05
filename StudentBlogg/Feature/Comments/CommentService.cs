@@ -163,4 +163,16 @@ public class CommentService : ICommentService
             ? null
             : _mapper.MapToDto(commentResponse);
     }
+
+    public async Task<IEnumerable<CommentDto>> FindAsync(CommentSearchParams searchParams)
+    {
+        Expression<Func<Comment, bool>> predicate = comment =>
+            (string.IsNullOrEmpty(searchParams.Title) || comment.Title.Contains(searchParams.Title)) &&
+            (string.IsNullOrEmpty(searchParams.Content) || comment.Content.Contains(searchParams.Content)) &&
+            (string.IsNullOrEmpty(searchParams.DateCommented) || comment.DateCommented.Contains(searchParams.DateCommented)));
+
+        IEnumerable<Comment> comments = await commentRepository.FindAsync(predicate);
+
+        return comments.Select(mapper.MapToDto)!;
+    }
 }

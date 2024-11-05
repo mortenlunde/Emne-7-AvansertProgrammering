@@ -5,4 +5,5 @@ namespace StudentBlogg.Feature.Comments.Interfaces;
 public interface ICommentService : IBaseService<CommentDto>
 {
     Task<CommentDto?> AddComment(CommentRegDto regDto);
+    Task<IEnumerable<CommentDto>> FindAsync(UserSearchParams userSearchParams);
 }
