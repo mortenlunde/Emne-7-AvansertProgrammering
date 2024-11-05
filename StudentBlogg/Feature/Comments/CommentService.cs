@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Feature.Comments.Interfaces;
 using StudentBlogg.Feature.Users;
@@ -131,7 +132,7 @@ public class CommentService : ICommentService
         return null;
     }
 
-    public async Task<CommentDto?> AddComment(CommentRegDto regDto)
+    public async Task<CommentDto?> AddComment(CommentRegDto regDto, Guid postId)
     {
         Comment comment = _regMapper.MapToModel(regDto);
         comment.Id = Guid.NewGuid();
@@ -143,20 +144,11 @@ public class CommentService : ICommentService
         else
         {
             _logger.LogWarning("Invalid or missing UserId in HttpContext.");
-            return null;  // or handle the error as appropriate
+            return null;
         }
 
-        if (_httpContextAccessor.HttpContext.Items["PostId"] is string postIdStr 
-            && Guid.TryParse(postIdStr, out Guid postId))
-        {
-            comment.PostId = postId;
-        }
-        else
-        {
-            _logger.LogWarning("Invalid or missing PostId in HttpContext.");
-            return null;  // or handle the error as appropriate
-        }
         comment.DateCommented = DateTime.UtcNow;
+        comment.PostId = postId;
         
         Comment? commentResponse = await _commentRepository.AddAsync(comment);
         return commentResponse is null
@@ -167,12 +159,10 @@ public class CommentService : ICommentService
     public async Task<IEnumerable<CommentDto>> FindAsync(CommentSearchParams searchParams)
     {
         Expression<Func<Comment, bool>> predicate = comment =>
-            (string.IsNullOrEmpty(searchParams.Title) || comment.Title.Contains(searchParams.Title)) &&
-            (string.IsNullOrEmpty(searchParams.Content) || comment.Content.Contains(searchParams.Content)) &&
-            (string.IsNullOrEmpty(searchParams.DateCommented) || comment.DateCommented.Contains(searchParams.DateCommented)));
+            string.IsNullOrEmpty(searchParams.Content) || comment.Content.Contains(searchParams.Content);
 
-        IEnumerable<Comment> comments = await commentRepository.FindAsync(predicate);
+        IEnumerable<Comment> comments = await _commentRepository.FindAsync(predicate);
 
-        return comments.Select(mapper.MapToDto)!;
+        return comments.Select(_mapper.MapToDto);
     }
 }

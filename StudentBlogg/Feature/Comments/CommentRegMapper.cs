@@ -8,8 +8,6 @@ public class CommentRegMapper : IMapper<Comment, CommentRegDto>
     {
         return new CommentRegDto()
         {
-            PostId = model.PostId,
-            UserId = model.UserId,
             Content = model.Content
         };
     }
@@ -18,8 +16,6 @@ public class CommentRegMapper : IMapper<Comment, CommentRegDto>
     {
         return new Comment()
         {
-            PostId = dto.PostId,
-            UserId = dto.UserId,
             Content = dto.Content
         };
     }

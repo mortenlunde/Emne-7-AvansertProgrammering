@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentBlogg.Feature.Comments.Interfaces;
+using StudentBlogg.Feature.Posts;
 using StudentBlogg.Feature.Posts.Interfaces;
 
 namespace StudentBlogg.Feature.Comments;
@@ -15,9 +16,9 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     [HttpGet("Comments/{postId:guid}/comments", Name = "GetComment")]
     public async Task<ActionResult<CommentDto>> GetComment(Guid postId)
     {
-        var postDto = await _postService.GetByIdAsync(postId);
-        var commentDto = await _commentService.GetPagedAsync(1,10);
-        var result = commentDto.Where(x => x.PostId == postDto!.Id);
+        PostDto? postDto = await _postService.GetByIdAsync(postId);
+        IEnumerable<CommentDto>? commentDto = await _commentService.GetPagedAsync(1,10);
+        IEnumerable<CommentDto> result = commentDto.Where(x => x.PostId == postDto!.Id);
         
         if (commentDto == null)
             _logger.LogError($"Comment with id {postId} not found");
@@ -29,9 +30,11 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
 
     [HttpGet(Name = "GetComments")]
     public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments(
-        [FromQuery] CommentSearchParams? searchParams, [FromQuery] int pageNr = 1, [FromQuery] int pageSize = 10)
+        [FromQuery] CommentSearchParams? searchParams, 
+        [FromQuery] int pageNr = 1, 
+        [FromQuery] int pageSize = 10)
     {
-        if (searchParams!.Title is null && searchParams!.Content is null && searchParams!.DateCommented is null)
+        if (searchParams?.Content is null)
         {
             IEnumerable<CommentDto> commentDtos = await _commentService.GetPagedAsync(pageNr, pageSize);
             return Ok(commentDtos);
@@ -41,9 +44,10 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     }
 
     [HttpPost("Post", Name = "PostComment")]
-    public async Task<ActionResult<CommentDto>> PostComment(CommentRegDto dto)
+    public async Task<ActionResult<CommentDto>> PostComment(CommentRegDto dto,
+    [FromQuery] Guid postId)
     {
-        var comment = await _commentService.AddComment(dto);
+        var comment = await _commentService.AddComment(dto, postId);
 
         return comment is null
             ? BadRequest("Comment not created")
