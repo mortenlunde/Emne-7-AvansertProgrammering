@@ -1,7 +1,5 @@
 using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Feature.Comments.Interfaces;
-using StudentBlogg.Feature.Posts;
-using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users;
 using StudentBlogg.Feature.Users.Interfaces;
 using StudentBlogg.Middleware;
@@ -15,24 +13,22 @@ public class CommentService : ICommentService
     private readonly ICommentRepository _commentRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper<Comment, CommentRegDto> _regMapper;
-    private readonly IPostRepository _postRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public CommentService(ILogger<CommentService> logger, IMapper<Comment, CommentDto> mapper, 
-        ICommentRepository commentRepository, IUserRepository userRepository, IMapper<Comment, CommentRegDto> commentMapper,
-        IPostRepository postRepository, IHttpContextAccessor httpContextAccessor)
+        ICommentRepository commentRepository, IUserRepository userRepository, IMapper<Comment, 
+            CommentRegDto> commentMapper, IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
         _mapper = mapper;
         _commentRepository = commentRepository;
         _userRepository = userRepository;
         _regMapper = commentMapper;
-        _postRepository = postRepository;
         _httpContextAccessor = httpContextAccessor;
     }
     public async Task<CommentDto?> GetByIdAsync(Guid id)
     {
-        Comment comment = await _commentRepository.GetByIdAsync(id);
+        Comment? comment = await _commentRepository.GetByIdAsync(id);
         
         return comment is null
             ? null
@@ -57,7 +53,7 @@ public class CommentService : ICommentService
 
     public async Task<CommentDto?> UpdateAsync(Guid id, CommentDto entity)
     {
-        string loggedInUserId = _httpContextAccessor.HttpContext.Items["UserId"] as string;
+        string? loggedInUserId = _httpContextAccessor.HttpContext?.Items["UserId"] as string;
         
         if (!Guid.TryParse(loggedInUserId, out Guid userId))
         {
@@ -65,20 +61,20 @@ public class CommentService : ICommentService
             return null;
         }
         
-        User loggedInUser = (await _userRepository.FindAsync(user => user.Id == userId)).FirstOrDefault();
+        User? loggedInUser = (await _userRepository.FindAsync(user => user.Id == userId)).FirstOrDefault();
         if (loggedInUser is null)
         {
             _logger.LogWarning("User id not found: {UserId}", userId);
         }
         
-        Comment commentToUpdate = (await _commentRepository.FindAsync(c => c.Id == id)).FirstOrDefault();
+        Comment? commentToUpdate = (await _commentRepository.FindAsync(c => c.Id == id)).FirstOrDefault();
         if (commentToUpdate is null)
         {
             _logger.LogWarning("Comment not found: {Id}", id);
             return null;
         }
 
-        if (commentToUpdate.UserId == loggedInUser.Id || loggedInUser.IsAdminUser)
+        if (commentToUpdate.UserId == loggedInUser?.Id || loggedInUser!.IsAdminUser)
         {
             commentToUpdate.Content = entity.Content;
             Comment? updatedComment = await _commentRepository.UpdateByIdAsync(id, commentToUpdate);
@@ -95,7 +91,7 @@ public class CommentService : ICommentService
 
     public async Task<CommentDto?> DeleteByIdAsync(Guid id)
     {
-        string loggedInUserId = _httpContextAccessor.HttpContext.Items["UserId"] as string;
+        string? loggedInUserId = _httpContextAccessor.HttpContext?.Items["UserId"] as string;
         if (!Guid.TryParse(loggedInUserId, out Guid loggedInUserGuid))
         {
             _logger.LogWarning("Invalid UserId format: {UserId}", loggedInUserId);
@@ -139,7 +135,7 @@ public class CommentService : ICommentService
     {
         Comment comment = _regMapper.MapToModel(regDto);
         comment.Id = Guid.NewGuid();
-        if (_httpContextAccessor.HttpContext.Items["UserId"] is string userIdStr 
+        if (_httpContextAccessor.HttpContext?.Items["UserId"] is string userIdStr 
             && Guid.TryParse(userIdStr, out Guid userId))
         {
             comment.UserId = userId;
@@ -162,7 +158,7 @@ public class CommentService : ICommentService
         }
         comment.DateCommented = DateTime.UtcNow;
         
-        Comment commentResponse = await _commentRepository.AddAsync(comment);
+        Comment? commentResponse = await _commentRepository.AddAsync(comment);
         return commentResponse is null
             ? null
             : _mapper.MapToDto(commentResponse);
