@@ -1,10 +1,10 @@
-using StudentBlogg.Feature.Users.Interfaces;
+using StudentBlogg.Common.Interfaces;
 
 namespace StudentBlogg.Feature.Users;
 
-public class UserMapper : IUserMapper
+public class UserMapper : IMapper<User, UserDto>
 {
-    public UserDto MaapToDto(User model)
+    public UserDto MapToDto(User model)
     {
         return new UserDto()
         {

@@ -5,65 +5,58 @@ using StudentBlogg.Feature.Comments.Interfaces;
 
 namespace StudentBlogg.Feature.Comments;
 
-public class CommentRepository : ICommentRepository
+public class CommentRepository(ILogger<CommentRepository> logger, StudentBloggDbContext dbContext)
+    : ICommentRepository
 {
-    private readonly ILogger<CommentRepository> _logger;
-    private readonly StudentBloggDbContext _dbContext;
-
-    public CommentRepository(ILogger<CommentRepository> logger, StudentBloggDbContext dbContext)
-    {
-        _logger = logger;
-        _dbContext = dbContext;
-    }
     public async Task<Comment?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Comments.FirstOrDefaultAsync(c => c.Id == id);
+        return await dbContext.Comments.FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<IEnumerable<Comment>> GetPagedAsync(int pageNumber, int pageSize)
     {
         int skip = (pageNumber - 1) * pageSize;
 
-        var comments = _dbContext.Comments
+        var comments = dbContext.Comments
             .OrderBy(c => c.DateCommented)
             .Skip(skip)
             .Take(pageSize)
             .ToListAsync();
         
-        _logger.LogInformation($"GetPagedAsync started for {pageSize} of {pageSize}.");
+        logger.LogInformation($"GetPagedAsync started for {pageSize} of {pageSize}.");
         
         return await comments;
     }
 
     public async Task<IEnumerable<Comment>> FindAsync(Expression<Func<Comment, bool>> predicate)
     {
-        return await _dbContext.Comments.Where(predicate).ToListAsync();
+        return await dbContext.Comments.Where(predicate).ToListAsync();
     }
 
     public async Task<Comment?> AddAsync(Comment entity)
     {
-        await _dbContext.Comments.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
+        await dbContext.Comments.AddAsync(entity);
+        await dbContext.SaveChangesAsync();
         
         return entity;
     }
 
     public async Task<Comment?> UpdateByIdAsync(Guid id, Comment entity)
     {
-        Comment? existingComment = await _dbContext.Comments.FindAsync(id);
+        Comment? existingComment = await dbContext.Comments.FindAsync(id);
         if (existingComment == null) return null;
         
         existingComment.Content = entity.Content;
         
-        await _dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
         return existingComment;
     }
 
     public async Task<Comment?> DeleteByIdAsync(Guid id)
     {
-        Comment? comment = await _dbContext.Comments.FindAsync(id);
-        await _dbContext.Comments.Where(c => c.Id == id).ExecuteDeleteAsync();
-        await _dbContext.SaveChangesAsync();
+        Comment? comment = await dbContext.Comments.FindAsync(id);
+        await dbContext.Comments.Where(c => c.Id == id).ExecuteDeleteAsync();
+        await dbContext.SaveChangesAsync();
         return comment;
     }
 }

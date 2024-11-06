@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using StudentBlogg.Feature.Comments;
 using StudentBlogg.Feature.Users;
-
 namespace StudentBlogg.Feature.Posts;
 
 public class Post
@@ -16,12 +15,12 @@ public class Post
     [Required, MinLength(2), MaxLength(100)]
     public string Title { get; set; } = string.Empty;
     
-    [Required]
+    [Required, MaxLength(5000)]
     public string Content { get; set; } = string.Empty;
     
     [Required]
     public DateTime DatePosted { get; set; }
     
-    public virtual User? User1 { get; set; }
-    public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+    public virtual User? User1 { get; init; }
+    public virtual ICollection<Comment> Comments { get; init; } = new HashSet<Comment>();
 }

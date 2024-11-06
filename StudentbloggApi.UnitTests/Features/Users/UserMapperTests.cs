@@ -5,7 +5,7 @@ namespace StudentblogApi.UnitTests.Features.Users;
 
 public class UserMapperTests
 {
-    private readonly IMapper<User, UserDto> _userMapper = new UserMapperGeneric();
+    private readonly IMapper<User, UserDto> _userMapper = new UserMapper();
 
     [Fact]
     public void MapToDto_When_UserModelIsValid_ShouldReturn_UserDto()

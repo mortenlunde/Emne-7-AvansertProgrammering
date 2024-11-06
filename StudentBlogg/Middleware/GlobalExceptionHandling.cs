@@ -29,6 +29,8 @@ public class GlobalExceptionHandling(ILogger<GlobalExceptionHandling> logger) : 
             RetryLimitExceededException => StatusCodes.Status503ServiceUnavailable,
             DbUpdateException => StatusCodes.Status503ServiceUnavailable,
             WrongUserLoggedInException => StatusCodes.Status401Unauthorized,
+            PostNotFoundException => StatusCodes.Status404NotFound,
+            CommentNotFoundException => StatusCodes.Status404NotFound,
             _ => StatusCodes.Status500InternalServerError
         };
         
@@ -56,6 +58,13 @@ public class UsernameAlreadyExistsException(string username)
 public class EmailAlreadyExistsException(string email) 
     : Exception($"E-posten '{email}' er allerede i bruk.");
 
+// Post Exeptions
+public class PostNotFoundException()
+    : Exception("Post not found.") { }
+
+// Comment Exeptions
+public class CommentNotFoundException()
+    : Exception("Comment not found.") { }
     
 // Authentication Exceptions
 public class WrongUsernameOrPasswordException() 
@@ -68,7 +77,7 @@ public class InvalidAuthHeaderException()
     : Exception("Invalid auth header.") { }
     
 public class UnauthorisedOperation()
-    : Exception("Unauthorised operation. You are trying to delete a useraccount that does not belong to your login") { }
+    : Exception("Unauthorised operation. You are trying to delete something that does not belong to your account.") { }
     
 public class NoUserFoundException(string id)
     : Exception($"User with ID {id} does not exist.") { }
@@ -79,3 +88,6 @@ public class DbConnectionException()
     
 public class WrongUserLoggedInException() 
     : Exception("You can not delete post for another user.") { }
+    
+public class NotFoundException()
+    : Exception("Not found.") { }

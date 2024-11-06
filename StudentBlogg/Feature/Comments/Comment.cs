@@ -16,12 +16,12 @@ public class Comment
     [ForeignKey("UserID")]
     public Guid UserId { get; set; }
     
-    [Required]
-    public string Content { get; set; } = string.Empty;
+    [Required, StringLength(1000)]
+    public string? Content { get; set; } = string.Empty;
     
     [Required]
     public DateTime DateCommented { get; set; }
     
-    public virtual Post? Post { get; set; }
-    public virtual User? User { get; set; }
+    public virtual Post? Post { get; init; }
+    public virtual User? User { get; init; }
 }

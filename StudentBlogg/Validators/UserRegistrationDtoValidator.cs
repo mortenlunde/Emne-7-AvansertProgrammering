@@ -1,6 +1,5 @@
 using FluentValidation;
 using StudentBlogg.Feature.Users;
-
 namespace StudentBlogg.Validators;
 
 public class UserRegistrationDtoValidator : AbstractValidator<UserRegistrationDto>

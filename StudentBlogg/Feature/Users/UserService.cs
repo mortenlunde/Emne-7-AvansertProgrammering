@@ -16,9 +16,10 @@ public class UserService(
     public async Task<UserDto?> GetByIdAsync(Guid id)
     {
         User? model = await userRepository.GetByIdAsync(id);
-        return model is null
-            ? null
-            : mapper.MapToDto(model);
+        if (model?.Id == null)
+            throw new NoUserFoundException("No user found");
+        
+        return mapper.MapToDto(model);
     }
 
     public async Task<IEnumerable<UserDto>> GetPagedAsync(int pageNumber, int pageSize)
@@ -40,8 +41,12 @@ public class UserService(
 
     public async Task<UserDto?> UpdateAsync(Guid id, UserDto entity)
     {
-        await Task.Delay(10);
-        return null;
+        User userModel = mapper.MapToModel(entity);
+        User? userResponse = await userRepository.UpdateByIdAsync(id, userModel);
+        
+        return userResponse is null
+            ? null
+            : mapper.MapToDto(userResponse);
     }
 
     public async Task<UserDto?> DeleteByIdAsync(Guid id)
@@ -112,5 +117,53 @@ public class UserService(
         IEnumerable<User> users = await userRepository.FindAsync(predicate);
         
         return users.Select(mapper.MapToDto)!;
+    }
+
+    public async Task<UserDto> UpdateRegisterAsync(Guid id, UserRegistrationDto entity)
+    {
+        string? loggedInUserId = httpContextAccessor.HttpContext?.Items["UserId"] as string;
+        if (!Guid.TryParse(loggedInUserId, out Guid userId))
+        {
+            logger.LogWarning("Invalid user id format: {UserId}", userId);
+            throw new UnauthorizedAccessException("User is not authorized.");
+        }
+        
+        User? loggedInUser = (await userRepository.FindAsync(user => user.Id.ToString() == loggedInUserId)).FirstOrDefault();
+        if (loggedInUser?.Id != id)
+        {
+            logger.LogWarning("Logged-in user with ID {UserId} not found.", userId);
+            throw new NoUserFoundException("The specified user ID is invalid.");
+        }
+        if (id == Guid.Empty)
+        {
+            throw new NoUserFoundException("The specified user ID is invalid.");
+        }
+        
+        User? userToUpdate = userRegistrationMapper.MapToModel(entity);
+        if (userToUpdate is null)
+        {
+            logger.LogWarning("User with ID {UserId} not found.", userId);
+            throw new NotFoundException();
+        }
+
+        if (id == loggedInUser.Id || loggedInUser.IsAdminUser)
+        {
+            userToUpdate.Id = id;
+            userToUpdate.FirstName = entity.Firstname!;
+            userToUpdate.LastName = entity.Lastname!;
+            userToUpdate.Email = entity.Email!;
+            userToUpdate.Username = entity.Username!;
+            userToUpdate.Updated = DateTime.UtcNow;
+            userToUpdate.HashedPassword = BCrypt.Net.BCrypt.HashPassword(entity.Password);
+        
+            User? updatedUser = await userRepository.UpdateByIdAsync(userId, userToUpdate);
+
+            return mapper.MapToDto(updatedUser!)!;
+        }
+        else
+        {
+            logger.LogWarning("User {UserId} is not authorized to update this profile.", userId);
+            throw new UnauthorizedAccessException("You are not authorized to update this profile.");
+        }
     }
 }

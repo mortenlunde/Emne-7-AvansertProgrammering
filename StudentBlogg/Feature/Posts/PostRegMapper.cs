@@ -8,7 +8,6 @@ public class PostRegMapper : IMapper<Post, PostRegDto>
     {
         return new PostRegDto()
         {
-            UserId = model.UserId,
             Title = model.Title,
             Content = model.Content
         };
@@ -18,7 +17,6 @@ public class PostRegMapper : IMapper<Post, PostRegDto>
     {
         return new Post()
         {
-            UserId = dto.UserId,
             Title = dto.Title,
             Content = dto.Content
         };

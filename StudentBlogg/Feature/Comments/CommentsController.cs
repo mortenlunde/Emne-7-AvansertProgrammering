@@ -7,25 +7,20 @@ namespace StudentBlogg.Feature.Comments;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class CommentController(ILogger<CommentController> logger, ICommentService commentService, IPostService postService) : ControllerBase
+public class CommentsController(ILogger<CommentsController> logger, ICommentService commentService, IPostService postService) : ControllerBase
 {
-    private readonly ILogger<CommentController> _logger = logger;
+    private readonly ILogger<CommentsController> _logger = logger;
     private readonly ICommentService _commentService = commentService;
     private readonly IPostService _postService = postService;
 
-    [HttpGet("Comments/{postId:guid}/comments", Name = "GetComment")]
+    [HttpGet("{postId:guid}/comments", Name = "GetComment")]
     public async Task<ActionResult<CommentDto>> GetComment(Guid postId)
     {
         PostDto? postDto = await _postService.GetByIdAsync(postId);
-        IEnumerable<CommentDto>? commentDto = await _commentService.GetPagedAsync(1,10);
+        IEnumerable<CommentDto> commentDto = await _commentService.GetPagedAsync(1,10);
         IEnumerable<CommentDto> result = commentDto.Where(x => x.PostId == postDto!.Id);
         
-        if (commentDto == null)
-            _logger.LogError($"Comment with id {postId} not found");
-        
-        return commentDto is null 
-            ? NotFound("Comments not found.") 
-            : Ok(result);
+        return Ok(result);
     }
 
     [HttpGet(Name = "GetComments")]
@@ -47,7 +42,7 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     public async Task<ActionResult<CommentDto>> PostComment(CommentRegDto dto,
     [FromQuery] Guid postId)
     {
-        var comment = await _commentService.AddComment(dto, postId);
+        CommentDto? comment = await _commentService.AddComment(dto, postId);
 
         return comment is null
             ? BadRequest("Comment not created")
@@ -58,7 +53,7 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     public async Task<ActionResult<CommentDto>> UpdateComment(Guid id, CommentDto dto)
     {
         _logger.LogInformation($"Attempting to Update comment with id {id}");
-        var result = await _commentService.UpdateAsync(id, dto);
+        CommentDto? result = await _commentService.UpdateAsync(id, dto);
         
         return result is null
             ? BadRequest("Comment not updated")
@@ -69,7 +64,7 @@ public class CommentController(ILogger<CommentController> logger, ICommentServic
     public async Task<ActionResult<CommentDto>> DeleteComment(Guid id)
     {
         _logger.LogInformation($"Attempting to Delete comment with id {id}");
-        var result = await _commentService.DeleteByIdAsync(id);
+        CommentDto? result = await _commentService.DeleteByIdAsync(id);
         
         return result is null
             ? BadRequest("Comment not deleted")

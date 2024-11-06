@@ -60,9 +60,20 @@ public class UserRepository(ILogger<UserRepository> logger, StudentBloggDbContex
         return entity;
     }
 
-    public Task<User?> UpdateByIdAsync(Guid id, User entity)
+    public async Task<User?> UpdateByIdAsync(Guid id, User entity)
     {
-        throw new NotImplementedException();
+        var user = await dbContext.Users.FindAsync(id);
+        if (user == null) return null;
+        
+        user.Username = entity.Username;
+        user.Email = entity.Email;
+        user.FirstName = entity.FirstName;
+        user.LastName = entity.LastName;
+        user.HashedPassword = entity.HashedPassword;
+        user.Updated = entity.Updated;
+        
+        await dbContext.SaveChangesAsync();
+        return user;
     }
 
     public async Task<User?> DeleteByIdAsync(Guid id)

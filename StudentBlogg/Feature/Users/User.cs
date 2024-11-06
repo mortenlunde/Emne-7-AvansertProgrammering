@@ -18,6 +18,7 @@ public class User
     [Required, MinLength(3), MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
     
+    [StringLength(60)]
     public string HashedPassword { get; set; } = string.Empty;
     
     [Required, EmailAddress, MaxLength(255)]

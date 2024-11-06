@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using StudentBlogg.Common.Interfaces;
 using StudentBlogg.Feature.Posts.Interfaces;
 using StudentBlogg.Feature.Users;
@@ -7,22 +8,24 @@ using StudentBlogg.Middleware;
 namespace StudentBlogg.Feature.Posts;
 
 public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> mapper, IPostRepository postRepository, 
-    IUserRepository userRepository, IMapper<Post, PostRegDto> mapperReg, IHttpContextAccessor httpContextAccessor) : IPostService
+    IUserRepository userRepository, IMapper<Post, PostRegDto> mapperReg,
+    IHttpContextAccessor httpContextAccessor) : IPostService
 {
     public async Task<PostDto?> GetByIdAsync(Guid id)
     {
         Post? post = await postRepository.GetByIdAsync(id);
         
-        return post is null
-            ? null
-            : mapper.MapToDto(post);
+        if (post?.Id is null)
+            throw new PostNotFoundException();
+        
+        return mapper.MapToDto(post);
     }
 
     public async Task<IEnumerable<PostDto>> GetPagedAsync(int pageNumber, int pageSize)
     {
         IEnumerable<Post> posts = await postRepository.GetPagedAsync(pageNumber, pageSize);
         
-        return posts.Select(p => mapper.MapToDto(p)).ToList();
+        return posts.Select(mapper.MapToDto).ToList();
     }
 
     public async Task<PostDto?> AddAsync(PostDto dto)
@@ -37,8 +40,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
 
     public async Task<PostDto?> UpdateAsync(Guid id, PostDto entity)
     {
-        // Retrieve logged-in user ID from HttpContext
-        string? loggedInUserId = httpContextAccessor.HttpContext.Items["UserId"] as string;
+        string? loggedInUserId = httpContextAccessor.HttpContext?.Items["UserId"] as string;
 
         if (!Guid.TryParse(loggedInUserId, out Guid loggedInUserGuid))
         {
@@ -46,46 +48,39 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
             return null;
         }
 
-        // Retrieve the logged-in user from the repository
         User? loggedInUser = (await userRepository.FindAsync(user => user.Id == loggedInUserGuid)).FirstOrDefault();
         if (loggedInUser == null)
         {
             logger.LogWarning("User {UserId} not found", loggedInUserId);
-            return null;
+            throw new NoUserFoundException($"{id}");
         }
 
-        // Find the post to be updated
         Post? postToUpdate = (await postRepository.FindAsync(post => post.Id == id)).FirstOrDefault();
         if (postToUpdate == null)
         {
             logger.LogWarning("Post with Id {PostId} not found", id);
-            return null;
+            throw new PostNotFoundException();
         }
 
-        // Check if the logged-in user is authorized to update the post
-        if (postToUpdate.UserId == loggedInUser.Id || loggedInUser.IsAdminUser)
+        if (postToUpdate.UserId == loggedInUser.Id)
         {
-            // Map the DTO to the Post model and update fields
             postToUpdate.Title = entity.Title;
             postToUpdate.Content = entity.Content;
 
-            // Save changes through the repository
             Post? updatedPost = await postRepository.UpdateByIdAsync(id, postToUpdate);
 
             return updatedPost is null 
                 ? null 
                 : mapper.MapToDto(updatedPost);
         }
-        else
-        {
-            throw new WrongUserLoggedInException();
-        }
+
+        throw new WrongUserLoggedInException();
     }
 
 
     public async Task<PostDto?> DeleteByIdAsync(Guid id)
     {
-        string? loggedInUserId = httpContextAccessor.HttpContext.Items["UserId"] as string;
+        string? loggedInUserId = httpContextAccessor.HttpContext?.Items["UserId"] as string;
 
         if (!Guid.TryParse(loggedInUserId, out Guid loggedInUserGuid))
         {
@@ -97,7 +92,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
         if (loggedInUser == null)
         {
             logger.LogWarning("User {UserId} not found", loggedInUserId);
-            return null;
+            throw new NoUserFoundException($"{id}");
         }
 
         IEnumerable<Post> post = await postRepository.FindAsync(post => post.Id == id);
@@ -106,7 +101,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
         if (postToDelete == null)
         {
             logger.LogWarning("Post with Id {PostId} not found", id);
-            return null;
+            throw new PostNotFoundException();
         }
 
         if (postToDelete.UserId == loggedInUser.Id || loggedInUser.IsAdminUser)
@@ -117,7 +112,7 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
             if (deletedPost == null)
             {
                 logger.LogWarning("Failed to delete post with Id {PostId}", id);
-                return null;
+                throw new PostNotFoundException();
             }
 
             return mapper.MapToDto(deletedPost);
@@ -133,14 +128,9 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
         Post post = mapperReg.MapToModel(postDto);
         post.Id = Guid.NewGuid();
     
-        // Ensure UserId is of type Guid, converting if necessary
-        if (httpContextAccessor.HttpContext.Items["UserId"] is string userIdString && Guid.TryParse(userIdString, out Guid userIdGuid))
+        if (httpContextAccessor.HttpContext?.Items["UserId"] is string userIdString && Guid.TryParse(userIdString, out Guid userIdGuid))
         {
             post.UserId = userIdGuid;
-        }
-        else if (httpContextAccessor.HttpContext.Items["UserId"] is Guid userId)
-        {
-            post.UserId = userId;
         }
         else
         {
@@ -149,10 +139,20 @@ public class PostService(ILogger<PostService> logger, IMapper<Post, PostDto> map
 
         post.DatePosted = DateTime.UtcNow;
     
-        Post postResponse = await postRepository.AddAsync(post);
+        Post? postResponse = await postRepository.AddAsync(post);
     
-        return postResponse is null 
+        return (postResponse is null 
             ? null 
-            : mapper.MapToDto(postResponse);
+            : mapper.MapToDto(postResponse))!;
+    }
+
+    public async Task<IEnumerable<PostDto>> FindAsync(PostSearchParams searchParams)
+    {
+        Expression<Func<Post, bool>> predicate = post =>
+            (string.IsNullOrEmpty(searchParams.Title) || post.Title.Contains(searchParams.Title)) &&
+            (string.IsNullOrEmpty(searchParams.Content) || post.Content.Contains(searchParams.Content));
+        
+        IEnumerable<Post> posts = await postRepository.FindAsync(predicate);
+        return posts.Select(mapper.MapToDto);
     }
 }

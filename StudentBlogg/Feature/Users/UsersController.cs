@@ -16,7 +16,7 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
     [HttpGet("{id:guid}", Name = "GetUserByIDAsync")]
     public async Task<ActionResult<UserDto>> GetUserByIdAsync(Guid id)
     {
-        var userDto = await _userService.GetByIdAsync(id);
+        UserDto? userDto = await _userService.GetByIdAsync(id);
         if (userDto == null)
             _logger.LogError($"User with ID {id} not found");
         return userDto is null 
@@ -42,7 +42,7 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
     [HttpPost("Register", Name = "RegisterUserAsync")]
     public async Task<ActionResult<UserDto>> RegisterUserAsync(UserRegistrationDto dto)
     {
-        var user = await _userService.RegisterAsync(dto);
+        UserDto? user = await _userService.RegisterAsync(dto);
         return user is null
             ? BadRequest("Failed to register new user")
             : Ok(user);
@@ -52,7 +52,7 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
     public async Task<ActionResult<UserDto>> DeleteUserAsync(Guid id)
     {
         _logger.LogInformation($"User with ID {id} deleted");
-        var result = await _userService.DeleteByIdAsync(id);
+        UserDto? result = await _userService.DeleteByIdAsync(id);
         
         return result is null
             ? BadRequest("Failed to delete user")
@@ -60,26 +60,22 @@ public class UsersController(ILogger<UsersController> logger, IUserService userS
     }
 
     [HttpPut("{id:guid}", Name = "UpdateUserAsync")]
-    public async Task<ActionResult<UserDto>> UpdateUserAsync(Guid id, UserDto dto)
+    public async Task<ActionResult<UserDto>> UpdateUserAsync(Guid id, UserRegistrationDto dto)
     {
         _logger.LogInformation($"Updating user with ID {id} updated");
-        var result = await _userService.UpdateAsync(id, dto);
+        UserDto result = await _userService.UpdateRegisterAsync(id, dto);
         
-        return result is null
-            ? BadRequest("Failed to update user")
-            :Ok(result);
+        return Ok(result);
     }
 
     [HttpGet("{id:guid}/posts", Name = "GetUserPostsAsync")]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetUserPostsAsync(Guid id)
     {
         _logger.LogInformation($"User with ID {id} found");
-        var user  = await _userService.GetByIdAsync(id);
-        var posts = await _postService.GetPagedAsync(1, 10);
-        var result = posts.Where(u => u.UserId == user.Id);
+        UserDto? user  = await _userService.GetByIdAsync(id);
+        IEnumerable<PostDto> posts = await _postService.GetPagedAsync(1, 10);
+        IEnumerable<PostDto> result = posts.Where(u => u.UserId == user!.Id);
         
-        return result is null
-            ? BadRequest("Failed to get posts")
-            : Ok(result);
+        return Ok(result);
     }
 }

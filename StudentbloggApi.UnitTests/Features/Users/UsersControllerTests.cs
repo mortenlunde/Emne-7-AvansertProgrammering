@@ -44,13 +44,13 @@ public class UsersControllerTests
             .ReturnsAsync(userDtos);
 
         // Act
-        var result = await _usersController.GetUsersAsync(new UserSearchParams());
+        ActionResult<IEnumerable<UserDto>> result = await _usersController.GetUsersAsync(new UserSearchParams());
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<IEnumerable<UserDto>>>(result);
-        var returnValue = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var userdtoo = Assert.IsType<List<UserDto>>(returnValue.Value);
-        var dtoo = userdtoo.FirstOrDefault();
+        ActionResult<IEnumerable<UserDto>> actionResult = Assert.IsType<ActionResult<IEnumerable<UserDto>>>(result);
+        OkObjectResult returnValue = Assert.IsType<OkObjectResult>(actionResult.Result);
+        List<UserDto> userdtoo = Assert.IsType<List<UserDto>>(returnValue.Value);
+        UserDto? dtoo = userdtoo.FirstOrDefault();
         Assert.NotNull(dtoo);
         Assert.Equal(dtoo.Username, username);
     }

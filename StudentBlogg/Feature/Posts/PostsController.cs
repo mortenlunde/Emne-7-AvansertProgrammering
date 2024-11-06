@@ -5,9 +5,9 @@ namespace StudentBlogg.Feature.Posts;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class PostController(ILogger<PostController> logger, IPostService postService) : ControllerBase
+public class PostsController(ILogger<PostsController> logger, IPostService postService) : ControllerBase
 {
-    private readonly ILogger<PostController> _logger = logger;
+    private readonly ILogger<PostsController> _logger = logger;
     private readonly IPostService _postService = postService;
 
     [HttpGet("{id:guid}", Name = "GetPost")]
@@ -23,21 +23,25 @@ public class PostController(ILogger<PostController> logger, IPostService postSer
     }
 
     [HttpGet(Name = "GetPosts")]
-    public async Task<ActionResult<IEnumerable<PostDto>>> GetPosts(int page = 1, int pageSize = 10)
+    public async Task<ActionResult<IEnumerable<PostDto>>> GetPosts(
+        [FromQuery] PostSearchParams searchParams,
+        [FromQuery] int page = 1, 
+        [FromQuery] int pageSize = 10)
     {
-        var postDtos = await _postService.GetPagedAsync(page, pageSize);
-        
-        return Ok(postDtos);
+        if (searchParams.Content is null && searchParams.Title is null)
+        {
+            IEnumerable<PostDto> postDtos = await _postService.GetPagedAsync(page, pageSize);
+            return Ok(postDtos);
+        }
+
+        return Ok(await _postService.FindAsync(searchParams));
     }
 
     [HttpPost("Post", Name = "CreatePost")]
     public async Task<ActionResult<PostDto>> CreatePost(PostRegDto dto)
     {
-        var post = await _postService.CreatePostAsync(dto);
-
-        return post is null
-            ? BadRequest("Post not created")
-            : Ok(post);
+        PostDto post = await _postService.CreatePostAsync(dto);
+        return Ok(post);
     }
 
     [HttpDelete("{id:guid}", Name = "DeletePost")]
